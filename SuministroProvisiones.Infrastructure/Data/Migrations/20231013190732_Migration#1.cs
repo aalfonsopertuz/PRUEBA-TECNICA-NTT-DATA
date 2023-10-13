@@ -3,14 +3,14 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace SuministroProvisiones.Infrastructure.Migrations
+namespace SuministroProvisiones.Infrastructure.Data.Migrations
 {
     public partial class Migration1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "SolicitudSuministro",
+                name: "SolicitudesSuministro",
                 columns: table => new
                 {
                     SolicitudSuministroId = table.Column<int>(type: "int", nullable: false)
@@ -24,14 +24,15 @@ namespace SuministroProvisiones.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SolicitudSuministro", x => x.SolicitudSuministroId);
+                    table.PrimaryKey("PK_SolicitudesSuministro", x => x.SolicitudSuministroId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "SolicitudSuministroResponse",
+                name: "SolicitudesSuministroResponse",
                 columns: table => new
                 {
-                    SolicitudSuministroResponseId = table.Column<int>(type: "int", nullable: false),
+                    SolicitudSuministroResponseId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     LongitudPuntoOrigen = table.Column<double>(type: "float", nullable: false),
                     LatitudPuntoOrigen = table.Column<double>(type: "float", nullable: false),
                     FechaEntrega = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -42,23 +43,29 @@ namespace SuministroProvisiones.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SolicitudSuministroResponse", x => x.SolicitudSuministroResponseId);
+                    table.PrimaryKey("PK_SolicitudesSuministroResponse", x => x.SolicitudSuministroResponseId);
                     table.ForeignKey(
-                        name: "FK_SolicitudSuministroResponse_SolicitudSuministro_SolicitudSuministroResponseId",
-                        column: x => x.SolicitudSuministroResponseId,
-                        principalTable: "SolicitudSuministro",
+                        name: "FK_SolicitudesSuministroResponse_SolicitudesSuministro_SolicitudSuministroId",
+                        column: x => x.SolicitudSuministroId,
+                        principalTable: "SolicitudesSuministro",
                         principalColumn: "SolicitudSuministroId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SolicitudesSuministroResponse_SolicitudSuministroId",
+                table: "SolicitudesSuministroResponse",
+                column: "SolicitudSuministroId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "SolicitudSuministroResponse");
+                name: "SolicitudesSuministroResponse");
 
             migrationBuilder.DropTable(
-                name: "SolicitudSuministro");
+                name: "SolicitudesSuministro");
         }
     }
 }

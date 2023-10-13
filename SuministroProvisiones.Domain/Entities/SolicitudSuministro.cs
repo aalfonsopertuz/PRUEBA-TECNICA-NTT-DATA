@@ -14,5 +14,11 @@ namespace SuministroProvisiones.DOMAIN.Entities
         public int CantidadUnidades { get; set; }
 
         public SolicitudSuministroResponse? SolicitudSuministroResponse { get; set; }
+
+        public SolicitudSuministro()
+        {
+            this.Fecha = DateTime.Now;
+            this.Hora = DateTime.Now.TimeOfDay;
+        }
     }
 }

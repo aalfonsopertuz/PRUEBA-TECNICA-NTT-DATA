@@ -1,6 +1,10 @@
-﻿namespace SuministroProvisiones.Domain.Services.IServices
+﻿using SuministroProvisiones.Commons.Models;
+using SuministroProvisiones.DOMAIN.Entities;
+
+namespace SuministroProvisiones.Domain.Services.IServices
 {
-    internal interface ISolicitudSuministroService
+    public interface ISolicitudSuministroService
     {
+        Task<SolicitudSuministroResponseDto> SolicitarSumministro(SolicitudSuministroDto solicitudSuministro);
     }
 }

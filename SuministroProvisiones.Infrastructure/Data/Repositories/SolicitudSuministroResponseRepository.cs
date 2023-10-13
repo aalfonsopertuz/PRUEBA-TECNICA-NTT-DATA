@@ -1,22 +1,26 @@
 ﻿using SuministroProvisiones.Domain.IRepositories;
 using SuministroProvisiones.DOMAIN.Entities;
-using SuministroProvisiones.Infrastructure.Data.Context.IContext;
+using SuministroProvisiones.INFRAESTRUCTURE.Data.Context;
 
 namespace SuministroProvisiones.Infrastructure.Data.Repositories
 {
     public class SolicitudSuministroResponseRepository : ISolicitudSuministroResponseRepository
     {
-        private readonly IApplicationDbContext _dbContext;
+        private readonly ApplicationDbContext _dbContext;
 
-        public SolicitudSuministroResponseRepository(IApplicationDbContext dbContext)
+        public SolicitudSuministroResponseRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<int> AddAsync(SolicitudSuministroResponse solicitud)
+        public async Task AddAsync(SolicitudSuministroResponse solicitud)
         {
-            var entityEntry = await _dbContext.SolicitudesSuministroResponse.AddAsync(solicitud);
-            return entityEntry.Entity.SolicitudSuministroResponseId;
+            await _dbContext.SolicitudesSuministroResponse.AddAsync(solicitud);
+        }
+
+        public int SaveChanges()
+        {
+            return _dbContext.SaveChanges();
         }
     }
 }

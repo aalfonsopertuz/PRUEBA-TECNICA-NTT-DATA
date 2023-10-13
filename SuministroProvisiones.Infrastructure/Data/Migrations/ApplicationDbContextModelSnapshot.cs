@@ -8,7 +8,7 @@ using SuministroProvisiones.INFRAESTRUCTURE.Data.Context;
 
 #nullable disable
 
-namespace SuministroProvisiones.Infrastructure.Migrations
+namespace SuministroProvisiones.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -50,13 +50,16 @@ namespace SuministroProvisiones.Infrastructure.Migrations
 
                     b.HasKey("SolicitudSuministroId");
 
-                    b.ToTable("SolicitudSuministro");
+                    b.ToTable("SolicitudesSuministro");
                 });
 
             modelBuilder.Entity("SuministroProvisiones.DOMAIN.Entities.SolicitudSuministroResponse", b =>
                 {
                     b.Property<int>("SolicitudSuministroResponseId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SolicitudSuministroResponseId"), 1L, 1);
 
                     b.Property<int>("CantidadProvisionesEntregar")
                         .HasColumnType("int");
@@ -81,14 +84,17 @@ namespace SuministroProvisiones.Infrastructure.Migrations
 
                     b.HasKey("SolicitudSuministroResponseId");
 
-                    b.ToTable("SolicitudSuministroResponse");
+                    b.HasIndex("SolicitudSuministroId")
+                        .IsUnique();
+
+                    b.ToTable("SolicitudesSuministroResponse");
                 });
 
             modelBuilder.Entity("SuministroProvisiones.DOMAIN.Entities.SolicitudSuministroResponse", b =>
                 {
                     b.HasOne("SuministroProvisiones.DOMAIN.Entities.SolicitudSuministro", "SolicitudSuministro")
                         .WithOne("SolicitudSuministroResponse")
-                        .HasForeignKey("SuministroProvisiones.DOMAIN.Entities.SolicitudSuministroResponse", "SolicitudSuministroResponseId")
+                        .HasForeignKey("SuministroProvisiones.DOMAIN.Entities.SolicitudSuministroResponse", "SolicitudSuministroId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

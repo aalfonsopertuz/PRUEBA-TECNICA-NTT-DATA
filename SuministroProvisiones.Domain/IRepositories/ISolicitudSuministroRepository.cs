@@ -2,9 +2,11 @@
 
 namespace SuministroProvisiones.Domain.IRepositories
 {
-    public interface ISolicitudSuministroRepository
+    public interface ISolicitudSuministroRepository 
     {
-        Task<int> AddAsync(SolicitudSuministro solicitud);
+        Task AddAsync(SolicitudSuministro solicitud);
+
+        int SaveChanges();
 
     }
 }

@@ -1,8 +1,10 @@
 using SuministroProvisiones.INFRAESTRUCTURE.Data.Context;
 using Microsoft.EntityFrameworkCore;
-using SuministroProvisiones.Infrastructure.Data.Context.IContext;
 using SuministroProvisiones.Domain.IRepositories;
 using SuministroProvisiones.Infrastructure.Data.Repositories;
+using SuministroProvisiones.Domain.Services.IServices;
+using SuministroProvisiones.Domain.Services;
+using SuministroProvisiones.Infrastructure.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,9 +22,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(opt => {
 #endregion
 
 #region [DI Container]
-builder.Services.AddTransient<IApplicationDbContext, ApplicationDbContext>();
 builder.Services.AddScoped<ISolicitudSuministroResponseRepository, SolicitudSuministroResponseRepository>();
 builder.Services.AddScoped<ISolicitudSuministroRepository, SolicitudSuministroRepository>();
+builder.Services.AddScoped<ISolicitudSuministroService, SolicitudSuministroService>();
+
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 #endregion
 
 var app = builder.Build();
